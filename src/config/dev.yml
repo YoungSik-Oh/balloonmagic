@@ -1,0 +1,33 @@
+server:
+  port: 3010
+
+logger:
+  filename: 'balloonmagic'
+  dirname: '/Users/youngsik/feature/balloonmagic/backend/balloonmagic/logs/console'
+
+database:
+  type: 'mysql'
+  host: 'localhost'
+  port: 3306
+  username: 'root'
+  password: 'jms12jms!@'
+  database: 'balloonmagic'
+  synchronize: false
+  logging: true
+  logger:
+    filename: 'balloonmagic'
+    dirname: '/Users/youngsik/feature/balloonmagic/backend/balloonmagic/logs/query'
+
+resource:
+  savePath: '/Users/youngsik/feature/balloonmagic/backend/balloonmagic/public'
+  baseUrl: '/public'
+
+
+jwt:
+  accessSecret: 'access_key'
+  accessExpriesIn: 180
+  refreshSecret: 'refresh_key'
+  refreshExpriesIn: 3600
+
+cryptoJS:
+  encryptSecret: 'refresh_encrypt_key'
