@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   IPaginationOptions,
@@ -17,8 +22,33 @@ export class UserService {
   private readonly logger = new Logger(UserService.name);
 
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(User) private userRepository: Repository<User>
   ) {}
+
+  async userLogin({ id, pwd }): Promise<User> {
+    const user: User = await this.userRepository
+      .findOneOrFail({
+        where: {
+          userID: id,
+        },
+      })
+      .catch((error) => {
+        this.logger.log(error);
+        throw new BadRequestException(
+          `${id}는 존재하지 않는 아이디 입니다. 다시 확인해 주세요.`
+        );
+      });
+
+    const validatePassword = await bcrypt.compare(pwd, user.pwd);
+
+    if (!user || !validatePassword) {
+      throw new BadRequestException(
+        '비밀번호가 일치하지 않거나 유저가 존재하지 않습니다.'
+      );
+    }
+
+    return user;
+  }
 
   async getAllUsers(pagination: IPaginationOptions): Promise<Pagination<User>> {
     return paginate<User>(this.userRepository, pagination, {});

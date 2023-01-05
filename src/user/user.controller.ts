@@ -20,10 +20,15 @@ export class UserController {
   private readonly logger = new Logger(UserController.name);
   constructor(private userService: UserService) {}
 
+  @Post('/login')
+  userLogin(@Body() data: { id: string; pwd: string }) {
+    return this.userService.userLogin(data);
+  }
+
   @Get()
   getAllUser(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10
   ) {
     return this.userService.getAllUsers({ page, limit });
   }

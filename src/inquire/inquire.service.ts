@@ -33,7 +33,7 @@ export class InquireService {
       })
       .catch((error) => {
         this.logger.error(error);
-        throw new NotFoundException(`등록 된 이메일이 없습니다.`);
+        throw new NotFoundException(`등록된 이메일이 없습니다.`);
       });
 
     if (savedDtata) {
