@@ -11,6 +11,7 @@ import { CompanyinfoModule } from './companyinfo/companyinfo.module';
 import { MainscreenModule } from './mainscreen/mainscreen.module';
 import { CompanyIntroductionModule } from './company-introduction/company-introduction.module';
 import { ProgramModule } from './program/program.module';
+import { InquireModule } from './inquire/inquire.module';
 import config from './config/config';
 
 @Module({
@@ -27,6 +28,7 @@ import config from './config/config';
     MainscreenModule,
     CompanyIntroductionModule,
     ProgramModule,
+    InquireModule,
   ],
   controllers: [AppController],
   providers: [AppService],

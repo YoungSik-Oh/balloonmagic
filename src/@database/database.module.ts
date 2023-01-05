@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Board } from './entity/board.entity';
 import { CompanyInfo } from './entity/companyInfo.entity';
 import { CompanyIntroduction } from './entity/companyIntroduction.entity';
+import { Inquire } from './entity/Inquire.entity';
 import { MainScreen } from './entity/mainscreen.entity';
 import { Program } from './entity/program.entity';
 import { User } from './entity/user.entity';
@@ -15,6 +16,7 @@ const modules = [
     MainScreen,
     CompanyIntroduction,
     Program,
+    Inquire,
   ]),
 ];
 
