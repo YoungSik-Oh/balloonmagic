@@ -10,6 +10,7 @@ import { BoardModule } from './board/board.module';
 import { CompanyinfoModule } from './companyinfo/companyinfo.module';
 import { MainscreenModule } from './mainscreen/mainscreen.module';
 import { CompanyIntroductionModule } from './company-introduction/company-introduction.module';
+import { ProgramModule } from './program/program.module';
 import config from './config/config';
 
 @Module({
@@ -25,6 +26,7 @@ import config from './config/config';
     CompanyinfoModule,
     MainscreenModule,
     CompanyIntroductionModule,
+    ProgramModule,
   ],
   controllers: [AppController],
   providers: [AppService],
