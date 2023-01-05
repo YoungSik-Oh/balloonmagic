@@ -24,13 +24,13 @@ export class BoardService {
   ) {}
 
   async getAllBoard(
-    pagination: IPaginationOptions,
-    ctgy: BaordCategory
+    pagination: IPaginationOptions
+    // ctgy: BaordCategory
   ): Promise<Pagination<Board>> {
     return paginate<Board>(this.boardRepository, pagination, {
-      where: {
-        category: ctgy,
-      },
+      // where: {
+      //   category: ctgy,
+      // },
     });
   }
 

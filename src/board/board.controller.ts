@@ -26,13 +26,13 @@ export class BoardController {
 
   constructor(private readonly boardService: BoardService) {}
 
-  @Get('/:ctgy')
+  @Get('')
   getAllBoard(
-    @Param('ctgy') ctgy: BaordCategory,
+    // @Param('ctgy') ctgy: BaordCategory,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10
   ) {
-    return this.boardService.getAllBoard({ page, limit }, ctgy);
+    return this.boardService.getAllBoard({ page, limit });
   }
 
   @Post('/search')
