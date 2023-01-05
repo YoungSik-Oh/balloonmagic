@@ -16,7 +16,9 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
       logger: new FileQueryLogger({
         options: 'all',
         filename: properties.logger.filename,
-        dirname: properties.logger.dirname,
+        dirname:
+          __dirname.substring(0, __dirname.indexOf('\\dist')) +
+          properties.logger.dirname,
       }),
     };
   }
