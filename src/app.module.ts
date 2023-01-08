@@ -12,6 +12,7 @@ import { MainscreenModule } from './mainscreen/mainscreen.module';
 import { CompanyIntroductionModule } from './company-introduction/company-introduction.module';
 import { ProgramModule } from './program/program.module';
 import { InquireModule } from './inquire/inquire.module';
+import { MainhistoryModule } from './mainhistory/mainhistory.module';
 import config from './config/config';
 
 @Module({
@@ -29,6 +30,7 @@ import config from './config/config';
     CompanyIntroductionModule,
     ProgramModule,
     InquireModule,
+    MainhistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

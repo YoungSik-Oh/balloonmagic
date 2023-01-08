@@ -23,8 +23,8 @@ async function bootstrap() {
     new FileConsoleLogger({
       filename: config.get('logger.filename'),
       dirname:
-        __dirname.substring(0, __dirname.indexOf('\\dist')) +
-        config.get('logger.dirname'),
+        // __dirname.substring(0, __dirname.indexOf('\\dist')) +
+        process.cwd() + config.get('logger.dirname'),
     })
   );
 
