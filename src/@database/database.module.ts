@@ -8,6 +8,7 @@ import { MainHistory } from './entity/mainHistory.entity';
 import { MainScreen } from './entity/mainscreen.entity';
 import { Program } from './entity/program.entity';
 import { User } from './entity/user.entity';
+import { Visitant } from './entity/visitant.entity';
 
 const modules = [
   TypeOrmModule.forFeature([
@@ -19,6 +20,7 @@ const modules = [
     Program,
     Inquire,
     MainHistory,
+    Visitant,
   ]),
 ];
 

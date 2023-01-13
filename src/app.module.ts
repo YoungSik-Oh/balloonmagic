@@ -13,6 +13,7 @@ import { CompanyIntroductionModule } from './company-introduction/company-introd
 import { ProgramModule } from './program/program.module';
 import { InquireModule } from './inquire/inquire.module';
 import { MainhistoryModule } from './mainhistory/mainhistory.module';
+import { VisitantModule } from './visitant/visitant.module';
 import config from './config/config';
 
 @Module({
@@ -31,6 +32,7 @@ import config from './config/config';
     ProgramModule,
     InquireModule,
     MainhistoryModule,
+    VisitantModule,
   ],
   controllers: [AppController],
   providers: [AppService],
