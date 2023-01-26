@@ -20,7 +20,7 @@ export class InquireService {
   async insertEmail(data: InquireRegistVo): Promise<Inquire> {
     const saveData = await this.inquireRepository.create({
       email: data.email,
-      registAt: new Date(+new Date() + 3240 * 10000),
+      // registAt:new Date(+new Date() + 3240 * 10000),
     });
 
     return this.inquireRepository.save(saveData);
@@ -39,7 +39,7 @@ export class InquireService {
     if (savedDtata) {
       await this.inquireRepository.update(savedDtata.uuid, {
         ...data,
-        updateAt: new Date(+new Date() + 3240 * 10000),
+        updateAt: new Date(),
       });
     }
 

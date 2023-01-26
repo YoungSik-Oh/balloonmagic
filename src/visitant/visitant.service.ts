@@ -60,8 +60,15 @@ export class VisitantService {
         FROM VISITANT 
         WHERE date_format(VISIT_DAY , '%Y-%m-%d') 
         BETWEEN (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+0)) 
-          AND (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+7))
-    
+          AND (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+6))
+    `);
+
+    const thisWeekVisitantCount = await this.visitantRepository.query(`
+        SELECT SUM(COUNT) as weekCount
+        FROM VISITANT 
+        WHERE date_format(VISIT_DAY , '%Y-%m-%d') 
+        BETWEEN (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+0)) 
+        AND (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+6))
     `);
 
     const todayInquire = await this.connection.query(
@@ -78,17 +85,29 @@ export class VisitantService {
           FROM INQUIRE 
           WHERE date_format(REGIST_AT , '%Y-%m-%d') 
           BETWEEN (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+0)) 
-            AND (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+7))
+            AND (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+6))
           GROUP BY date
-        `
+          ORDER BY date ASC
+      `
     );
+
+    // 금주 문의 사항 등록 count
+    let weekInquireCount: number = 0;
+
+    weekInquire.map((payload, idx) => {
+      if (payload.count) {
+        weekInquireCount = weekInquireCount + +payload.count;
+      }
+    });
 
     return {
       todayVisitant: todayVisitant.length === 0 ? 0 : todayVisitant[0].COUNT,
       weekDayVisitant: weekDayVisitant,
+      WeekVisitantCount: +thisWeekVisitantCount[0].weekCount,
       todayInquire:
         todayInquire.length === 0 ? 0 : todayInquire[0].todayInquireCount,
       weekInquire: weekInquire,
+      weekInquireCount: weekInquireCount,
     };
   }
 }
