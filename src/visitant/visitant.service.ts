@@ -137,8 +137,6 @@ export class VisitantService {
       }
     }
 
-    console.log('inquireArr', inquireArr);
-
     // 금주 문의 사항 등록 count
     let weekInquireCount: number = 0;
 
