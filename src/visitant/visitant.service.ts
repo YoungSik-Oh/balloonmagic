@@ -49,6 +49,28 @@ export class VisitantService {
     const curDate = new Date(+new Date() + 3240 * 10000)
       .toISOString()
       .split('T')[0];
+
+    const thisWeekDays = await this.visitantRepository.query(`
+        SELECT
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 1 ) AS MONDAY,
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 2 ) AS TUESDAY,
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 3 ) AS WEDNESDAY,
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 4 ) AS THURSDAY,
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 5 ) AS FRIDAY,
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 6 ) AS SATURDAY,
+          ADDDATE( CURDATE(), - WEEKDAY(CURDATE()) + 7 ) AS SUNDAY
+        FROM
+          DUAL
+    `);
+
+    const weekDayArr: any = Object.values(thisWeekDays[0]).map((day: any) => ({
+      VISIT_DAY: day.toISOString().substring(0, 10),
+    }));
+
+    const inquireArr: any = Object.values(thisWeekDays[0]).map((day: any) => ({
+      date: day.toISOString().substring(0, 10),
+    }));
+
     const todayVisitant = await this.visitantRepository.query(`
             SELECT COUNT
             FROM VISITANT 
@@ -62,6 +84,18 @@ export class VisitantService {
         BETWEEN (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+0)) 
           AND (SELECT ADDDATE(CURDATE(),-WEEKDAY(CURDATE())+6))
     `);
+
+    for (let i = 0; i < weekDayArr.length; i++) {
+      for (let j = 0; j < weekDayVisitant.length; j++) {
+        if (weekDayArr[i].VISIT_DAY === weekDayVisitant[j].VISIT_DAY) {
+          weekDayArr[i].COUNT = weekDayVisitant[j].COUNT;
+          break;
+        }
+        if (j === weekDayVisitant.length - 1) {
+          weekDayArr[i].COUNT = '0';
+        }
+      }
+    }
 
     const thisWeekVisitantCount = await this.visitantRepository.query(`
         SELECT SUM(COUNT) as weekCount
@@ -91,6 +125,20 @@ export class VisitantService {
       `
     );
 
+    for (let i = 0; i < inquireArr.length; i++) {
+      for (let j = 0; j < weekInquire.length; j++) {
+        if (inquireArr[i].date === weekInquire[j].date) {
+          inquireArr[i].count = weekInquire[j].count;
+          break;
+        }
+        if (j === weekInquire.length - 1) {
+          inquireArr[i].count = '0';
+        }
+      }
+    }
+
+    console.log('inquireArr', inquireArr);
+
     // 금주 문의 사항 등록 count
     let weekInquireCount: number = 0;
 
@@ -102,11 +150,11 @@ export class VisitantService {
 
     return {
       todayVisitant: todayVisitant.length === 0 ? 0 : todayVisitant[0].COUNT,
-      weekDayVisitant: weekDayVisitant,
+      weekDayVisitant: weekDayArr,
       WeekVisitantCount: +thisWeekVisitantCount[0].weekCount,
       todayInquire:
         todayInquire.length === 0 ? 0 : todayInquire[0].todayInquireCount,
-      weekInquire: weekInquire,
+      weekInquire: inquireArr,
       weekInquireCount: weekInquireCount,
     };
   }

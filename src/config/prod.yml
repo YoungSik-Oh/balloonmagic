@@ -7,10 +7,10 @@ logger:
 
 database:
   type: 'mysql'
-  host: 'localhost'
+  host: '132.226.23.243'
   port: 3306
-  username: 'root'
-  password: 'jms12jms!@'
+  username: 'admin'
+  password: 'jms12jms12'
   database: 'balloonmagic'
   synchronize: false
   logging: true
